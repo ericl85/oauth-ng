@@ -1,4 +1,4 @@
-/* oauth-ng - v0.4.2 - 2015-06-19 */
+/* oauth-ng - v0.4.2 - 2015-08-18 */
 
 'use strict';
 
@@ -27,7 +27,7 @@ accessTokenService.factory('AccessToken', ['Storage', '$rootScope', '$location',
   },
   oAuth2HashTokens = [ //per http://tools.ietf.org/html/rfc6749#section-4.2.2
     'access_token', 'token_type', 'expires_in', 'scope', 'state',
-    'error','error_description'
+    'error','error_description', 'id_token'
   ];
 
   /**
@@ -170,7 +170,7 @@ accessTokenService.factory('AccessToken', ['Storage', '$rootScope', '$location',
       return;
     }
     var time = (new Date(service.token.expires_at))-(new Date());
-    if(time){
+    if(time && time > 0){
       $interval(function(){
         $rootScope.$broadcast('oauth:expired', service.token);
       }, time, 1);
@@ -386,7 +386,8 @@ directives.directive('oauth', [
         text: '@',          // (optional) login text
         authorizePath: '@', // (optional) authorization url
         state: '@',         // (optional) An arbitrary unique string created by your app to guard against Cross-site Request Forgery
-        storage: '@'        // (optional) Store token in 'sessionStorage' or 'localStorage', defaults to 'sessionStorage'
+        storage: '@',       // (optional) Store token in 'sessionStorage' or 'localStorage', defaults to 'sessionStorage'
+        nonce: '@',         // (optional)
       }
     };
 
