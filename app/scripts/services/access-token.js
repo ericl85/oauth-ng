@@ -9,7 +9,7 @@ accessTokenService.factory('AccessToken', ['Storage', '$rootScope', '$location',
   },
   oAuth2HashTokens = [ //per http://tools.ietf.org/html/rfc6749#section-4.2.2
     'access_token', 'token_type', 'expires_in', 'scope', 'state',
-    'error','error_description', 'id_token'
+    'error','error_description', 'id_token', 'session_state'
   ];
 
   /**
